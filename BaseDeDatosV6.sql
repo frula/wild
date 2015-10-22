@@ -11,8 +11,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Volcando estructura de base de datos para pizzeria
-CREATE DATABASE IF NOT EXISTS `pizzeria` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `pizzeria`;
+CREATE DATABASE IF NOT EXISTS `pizzeria2` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `pizzeria2`;
 
 
 -- Volcando estructura para tabla pizzeria.categoria
