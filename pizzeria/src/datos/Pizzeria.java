@@ -16,10 +16,10 @@ import negocio.DetallePedido;
 import negocio.MateriaPrima;
 import negocio.Pedido;
 import negocio.Producto;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.view.JasperViewer;
 
 public class Pizzeria {
 
@@ -170,7 +170,7 @@ public class Pizzeria {
 
 	}
 
-	public static void abrirReporte(String archivo, String parametroAPasarle,
+/*	public static void abrirReporte(String archivo, String parametroAPasarle,
 			String nombreParametro)
 
 	{
@@ -193,7 +193,7 @@ public class Pizzeria {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 	// Devuelve materias primas
 	public static ArrayList<MateriaPrima> devuelveMateriaPrima() {

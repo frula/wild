@@ -98,6 +98,29 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		});
 		btnPedidos.setBounds(22, 85, 90, 28);
 		getContentPane().add(btnPedidos);
+		
+		JButton btnNewButton = new JButton("Productos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Productos pro = new Productos();
+						pro.setVisible(true);
+				
+			}
+		});
+		btnNewButton.setBounds(148, 88, 125, 23);
+		getContentPane().add(btnNewButton);
+		
+		JButton btnCombos = new JButton("Combos");
+		btnCombos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Combos combo = new Combos();
+						
+			    combo.setVisible(true);
+			}
+		});
+		btnCombos.setBounds(308, 88, 89, 23);
+		getContentPane().add(btnCombos);
 
 		// Creo el menu contenedor
 		mb = new JMenuBar();
