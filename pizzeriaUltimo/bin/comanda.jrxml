@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46c68c21-7eec-4be2-b22d-bca0aa33968d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y3JtYnVkZGllcy5jbGkgQVMgLDEzNiwxMDtjcm1idWRkaWVzLmRldHZlbiAsMjc3LDM3O2NybWJ1&#xA;ZGRpZXMuc3RrICw0MTIsNDM7"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="comanda" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.pedido.`IDPedido`,
+	pizzeria.pedido.NumeroPedido,
+	pizzeria.pedido.Cliente,
+	pizzeria.pedido.FechaPedido,
+	pizzeria.detallepedido.`IDPedido`,
+	pizzeria.detallepedido.NumeroPedido,
+	pizzeria.detallepedido.`IDProducto`,
+	pizzeria.detallepedido.Cantidad,
+	pizzeria.detallepedido.Observacion,
+	pizzeria.cliente.`IDCliente`,
+	crmbuddies.cli.`NomFis`,
+	crmbuddies.cli.`Dom`,
+	crmbuddies.cli.`Loc`,
+	crmbuddies.cli.`Pro`,
+	crmbuddies.stk.`Des` AS desrcrip,
+	crmbuddies.cli.`CodPos`,
+	crmbuddies.cli.`DirEnt`
+FROM crmbuddies.stk
+	 INNER JOIN crmbuddies.detven ON 
+	 crmbuddies.detven.idpro = crmbuddies.stk.`Cod` 
+	 INNER JOIN crmbuddies.encven ON 
+	 crmbuddies.encven.`IDVen` = crmbuddies.detven.idven 
+	 INNER JOIN crmbuddies.cli ON 
+	 crmbuddies.encven.idcliente = crmbuddies.cli.`IDCli` 
+WHERE 
+	 crmbuddies.detven.fac = $P{Factura}]]>
+	</queryString>
+	<field name="occli" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idven" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idpro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="can" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valUni" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="t" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="linea" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fac" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IDVen" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idcliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fec" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ven" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="act" class="java.lang.Integer">
+		<fieldDescription><![CDATA[0 activo 1 no activo]]></fieldDescription>
+	</field>
+	<field name="pro" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NIF" class="java.lang.String">
+		<fieldDescription><![CDATA[CUIT]]></fieldDescription>
+	</field>
+	<field name="NomFis" class="java.lang.String">
+		<fieldDescription><![CDATA[Nombre]]></fieldDescription>
+	</field>
+	<field name="Dom" class="java.lang.String">
+		<fieldDescription><![CDATA[Domicilio]]></fieldDescription>
+	</field>
+	<field name="Loc" class="java.lang.String">
+		<fieldDescription><![CDATA[Localidad]]></fieldDescription>
+	</field>
+	<field name="Pro" class="java.lang.String">
+		<fieldDescription><![CDATA[Provincia]]></fieldDescription>
+	</field>
+	<field name="CodPos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="des" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="desrcrip" class="java.lang.String"/>
+	<field name="DirEnt" class="java.lang.String">
+		<fieldDescription><![CDATA[Direccion Entrega]]></fieldDescription>
+	</field>
+	<variable name="fac1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{fac}]]></variableExpression>
+	</variable>
+	<variable name="Variable_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[(($F{valUni}*$F{can})-(($F{valUni}*$F{can})*(($F{des})/100)))]]></variableExpression>
+	</variable>
+	<variable name="Variable_2" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{Variable_1}*0.21]]></variableExpression>
+	</variable>
+	<background>
+		<band height="14" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="178" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="297" y="94" width="150" height="24" uuid="de3166fc-d8fe-4bee-a96d-c7b22595fa00"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="96" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="26" width="250" height="20" uuid="bc20318c-5504-41d9-8316-46a61c653387"/>
+				<textFieldExpression><![CDATA[$F{Dom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="26" width="115" height="20" uuid="713565a5-5419-4bd0-bb68-4c09836473f2"/>
+				<textFieldExpression><![CDATA[$F{Loc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="26" width="150" height="20" uuid="db0cb64e-2465-4b68-9532-22d9f514da67"/>
+				<textFieldExpression><![CDATA[$F{Pro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="43" width="150" height="20" uuid="ab409546-5aaf-4a79-8ac6-b39b6ae41eab"/>
+				<textFieldExpression><![CDATA[$F{NIF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="4" width="330" height="20" uuid="93f68685-cb7e-4c6b-bc97-8051aee33e72"/>
+				<textFieldExpression><![CDATA[$F{NomFis}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="6" width="78" height="17" uuid="fe07f3d1-8577-480c-a451-fecb805895d0"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["COD"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="7" width="279" height="17" uuid="f490f3ed-9fc8-4219-9351-2c070b3dd044"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DESCRIPCION"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="7" width="65" height="17" uuid="4f57af36-2e53-412a-89e5-b05b6cf9bbc3"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CANT"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField pattern="">
+				<reportElement x="373" y="-3" width="67" height="15" uuid="d72cf6db-2cff-4567-b5e4-cfb42ad94588"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{can}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="11" y="-2" width="79" height="15" uuid="e0d7e738-f8ad-41eb-808a-ca6f6d6d966b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idpro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="91" y="-2" width="281" height="15" uuid="4a950f15-93e1-43b2-a557-7055e0ee26f8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desrcrip}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="133" splitType="Stretch">
+			<textField pattern="#,##0.00;(#,##0.00-)">
+				<reportElement x="121" y="10" width="100" height="18" uuid="d6b5dbef-04f5-47b2-b6c1-8dad13002df3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[SUM($V{Variable_1})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="9" width="100" height="20" uuid="89d6cc37-0135-4234-8bd0-580b176fc534"/>
+				<textFieldExpression><![CDATA["Valor declarado"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="95" width="200" height="35" uuid="4a354c84-eaa0-4bc8-8f64-352fc1275660"/>
+				<textFieldExpression><![CDATA[$F{DirEnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="69" width="200" height="21" uuid="7cfe1476-9dc9-4f07-9a98-9c3833c1aa52"/>
+				<textFieldExpression><![CDATA[$P{Transporte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="10" width="100" height="20" uuid="f8564096-87cb-46da-81b1-55eb77f2b7f0"/>
+				<textFieldExpression><![CDATA["Factura: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="8" width="100" height="20" uuid="d08f84ca-1e06-4376-a12f-6708e3b98a8a"/>
+				<textFieldExpression><![CDATA[$F{fac}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="59"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch"/>
+	</summary>
+</jasperReport>
