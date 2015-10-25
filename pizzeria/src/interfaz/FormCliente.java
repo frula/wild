@@ -1,13 +1,67 @@
 package interfaz;
 
+import java.util.ArrayList;
+
+import com.mxrck.autocompleter.TextAutoCompleter;
+
+import datos.Pizzeria;
 import negocio.Cliente;
 
-public class FormCliente extends javax.swing.JDialog {
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class FormCliente extends javax.swing.JDialog {
+	
+	ArrayList <Cliente> clientes= Pizzeria.devuelveClientes();
+    int id=clientes.size()+1;
+    
     public FormCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //inicio();
+        
+        /*final TextAutoCompleter busqueda = new TextAutoCompleter(txbuscar);
+		for (int i = 0; i < Pizzeria.devuelveClientes().size(); i++) {
+
+			busqueda.addItem(Pizzeria.devuelveClientes().get(i).getNombreCliente());
+		}*/
+		
     }
+    
+    /*void inicio(){
+        checkhab.setEnabled(false);
+        checkhab.setSelected(true);
+        btagregar.setEnabled(false);
+        btbloquear.setEnabled(false);
+        btmod.setEnabled(false);
+    }*/
+    
+    void desbloquearGuardar(){
+        boolean desbloqueo=true;
+        if(txdni.getText().equals("")){
+            desbloqueo=false;}
+        else if(txtel.getText().equals("")){
+            desbloqueo=false;}
+        else if(txdir.getText().equals("")){
+            desbloqueo=false;}
+        else if(txnombre.getText().equals("")){
+            desbloqueo=false;
+        }
+        else if(btbloquear.isEnabled()==true || btmod.isEnabled()==true){
+            desbloqueo=false;
+        }
+        else{
+            desbloqueo=true;}
+        btagregar.setEnabled(desbloqueo);
+        }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -21,18 +75,60 @@ public class FormCliente extends javax.swing.JDialog {
         txbuscar = new javax.swing.JTextField();
         lbdni = new javax.swing.JLabel();
         txdni = new javax.swing.JTextField();
+        txdni.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent arg0) {
+        		if(!txdni.getText().matches("[0-9--]*")){
+                    JOptionPane.showMessageDialog(null, "Solo valores numéricos","Advertencia",JOptionPane.ERROR_MESSAGE);
+                    txdni.setText("");
+        		}
+        	}
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		desbloquearGuardar();
+        	}
+        });
         lbnombre = new javax.swing.JLabel();
         txnombre = new javax.swing.JTextField();
+        txnombre.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent arg0) {
+        	}
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		desbloquearGuardar();
+        	}
+        });
         lbdir = new javax.swing.JLabel();
         lbtel = new javax.swing.JLabel();
         txdir = new javax.swing.JTextField();
+        txdir.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent arg0) {
+        	}
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		desbloquearGuardar();
+        	}
+        });
         txtel = new javax.swing.JTextField();
+        txtel.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent arg0) {
+        		if(!txtel.getText().matches("[0-9--]*")){
+                    JOptionPane.showMessageDialog(null, "Solo valores numéricos","Advertencia",JOptionPane.ERROR_MESSAGE);
+                    txtel.setText("");
+        		}
+        	}
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		desbloquearGuardar();
+        	}
+        });
         btsalir = new javax.swing.JButton();
         btagregar = new javax.swing.JButton();
         btbloquear = new javax.swing.JButton();
         btmod = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablacli = new javax.swing.JTable();
         checkhab = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -142,103 +238,111 @@ public class FormCliente extends javax.swing.JDialog {
             }
         });
 
-        tablacli.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tablacli);
-
         checkhab.setText("Habilitado");
         checkhab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkhabActionPerformed(evt);
             }
         });
+        
+        JButton btnuevo = new JButton("Nuevo");
+        btnuevo.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		txdir.setText("");
+                checkhab.setSelected(true);
+                txdni.setEnabled(true);
+                txdni.setText("");
+                txnombre.setText("");
+                txtel.setText("");
+                btbloquear.setEnabled(false);
+                btmod.setEnabled(false);
+                btagregar.setEnabled(false);
+        	}
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(checkhab)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btbuscar)
-                .addGap(8, 8, 8))
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btagregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btbloquear))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbdni)
-                            .addComponent(lbnombre)
-                            .addComponent(lbdir)
-                            .addComponent(lbtel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txdir)
-                            .addComponent(txdni)
-                            .addComponent(txnombre)
-                            .addComponent(txtel, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btmod)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jPanel1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        						.addGroup(layout.createSequentialGroup()
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(lbdni)
+        								.addComponent(lbnombre)
+        								.addComponent(lbdir)
+        								.addComponent(lbtel))
+        							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        								.addComponent(txdir)
+        								.addComponent(txdni)
+        								.addComponent(txnombre)
+        								.addComponent(txtel, GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        								.addComponent(btnuevo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        								.addComponent(btagregar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btbloquear)))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btmod))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(checkhab)
+        					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        					.addComponent(txbuscar, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)))
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        					.addGroup(layout.createSequentialGroup()
+        						.addGap(-2147483648)
+        						.addContainerGap(178, Short.MAX_VALUE))
+        					.addGroup(layout.createSequentialGroup()
+        						.addPreferredGap(ComponentPlacement.RELATED)
+        						.addComponent(btsalir, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+        						.addContainerGap()))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(130)
+        					.addComponent(btbuscar)
+        					.addContainerGap())))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btbuscar)
-                        .addComponent(txbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(checkhab))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbdni)
-                            .addComponent(txdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbnombre)
-                            .addComponent(txnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txdir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbdir))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbtel)
-                            .addComponent(txtel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 96, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btagregar)
-                    .addComponent(btbloquear)
-                    .addComponent(btmod)
-                    .addComponent(btsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(checkhab)
+        				.addComponent(txbuscar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btbuscar))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(lbdni)
+        				.addComponent(txdni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(lbnombre)
+        				.addComponent(txnombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(txdir, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(lbdir))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(lbtel)
+        				.addComponent(txtel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+        			.addComponent(btnuevo)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btagregar)
+        				.addComponent(btbloquear)
+        				.addComponent(btmod)
+        				.addComponent(btsalir, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
         );
+        getContentPane().setLayout(layout);
 
         jPanel1.getAccessibleContext().setAccessibleName("panel");
 
@@ -246,12 +350,25 @@ public class FormCliente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbuscarActionPerformed
+    	
     }//GEN-LAST:event_txbuscarActionPerformed
 
     private void txdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txdniActionPerformed
+    	if(txdni.getText().equals("")){
+            txdni.requestFocus();
+        }
+        else{
+            txdni.transferFocus(); 
+        }
     }//GEN-LAST:event_txdniActionPerformed
 
     private void txtelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtelActionPerformed
+    	if(txtel.getText().equals("")){
+            txtel.requestFocus();
+        }
+        else{
+            txtel.transferFocus(); 
+        }
     }//GEN-LAST:event_txtelActionPerformed
 
     private void btsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalirActionPerformed
@@ -259,35 +376,70 @@ public class FormCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btsalirActionPerformed
 
     private void btagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btagregarActionPerformed
-        int es;
-        if(checkhab.isSelected()){
-           es=0; 
-        }
-        else{
-            es=1;
-        }
-        System.out.println("SOY Hab"+es);
-        int dni=Integer.parseInt(txdni.getText());
-        int tel=Integer.parseInt(txtel.getText());
-        Cliente.AgregarCliente(txnombre.getText(),dni,txdir.getText(),tel,es);
+    	int es;
+        if(checkhab.isSelected()){es=1;}
+        else{es=0;}
+        String dni=txdni.getText();
+        String tel=txtel.getText();
+        id=id++;
+        System.out.println(id);
+        Cliente cli = new Cliente(id,txnombre.getText(),dni,txdir.getText(),tel,es);
+        Pizzeria.AgregarCliente(cli);
     }//GEN-LAST:event_btagregarActionPerformed
 
     private void btbloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbloquearActionPerformed
+    	int act;
+        if(checkhab.isSelected()){act=0; checkhab.setSelected(false);}
+        else{act=1; checkhab.setSelected(true);}
+        
+        int dni=Integer.parseInt(txdni.getText());
+        Pizzeria.bloquearcliente(act,dni);
     }//GEN-LAST:event_btbloquearActionPerformed
 
     private void btmodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmodActionPerformed
+    	int dni=Integer.parseInt(txdni.getText());
+        int tel=Integer.parseInt(txtel.getText());
+        Pizzeria.modificarcliente(dni,txnombre.getText(),txdir.getText(),tel);
     }//GEN-LAST:event_btmodActionPerformed
 
     private void txnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txnombreActionPerformed
+    	if(txnombre.getText().equals("")){
+            txnombre.requestFocus();
+        }
+        else{
+            txnombre.transferFocus(); 
+        }
     }//GEN-LAST:event_txnombreActionPerformed
 
     private void txdirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txdirActionPerformed
+    	if(txdir.getText().equals("")){
+            txdir.requestFocus();
+        }
+        else{
+            txdir.transferFocus(); 
+        }
     }//GEN-LAST:event_txdirActionPerformed
 
     private void checkhabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkhabActionPerformed
     }//GEN-LAST:event_checkhabActionPerformed
 
     private void btbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbuscarActionPerformed
+    	if(txbuscar.getText().equals("")==false&&txbuscar.getText().equals(null)==false){
+            String busqueda = txbuscar.getText();
+            for(int i=0;i<clientes.size();i++){
+                if(busqueda.equals(clientes.get(i).getNombreCliente())){
+                    txdni.setText(String.valueOf(clientes.get(i).getDni()));
+                    txdir.setText(clientes.get(i).getDireccion());
+                    txtel.setText(String.valueOf(clientes.get(i).getTelefono()));
+                    txnombre.setText(clientes.get(i).getNombreCliente());
+                    if(clientes.get(i).getActivo()==1){checkhab.setSelected(true);}
+                    else{checkhab.setSelected(false);}
+                }
+            }
+            btbloquear.setEnabled(true);
+            btmod.setEnabled(true);
+            txdni.setEnabled(false);
+            }
     }//GEN-LAST:event_btbuscarActionPerformed
 
     /**
@@ -343,16 +495,13 @@ public class FormCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbdir;
     private javax.swing.JLabel lbdni;
     private javax.swing.JLabel lbnombre;
     private javax.swing.JLabel lbtel;
-    private javax.swing.JTable tablacli;
     private javax.swing.JTextField txbuscar;
     private javax.swing.JTextField txdir;
     private javax.swing.JTextField txdni;
     private javax.swing.JTextField txnombre;
     private javax.swing.JTextField txtel;
-    // End of variables declaration//GEN-END:variables
 }

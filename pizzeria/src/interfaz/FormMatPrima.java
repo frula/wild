@@ -6,9 +6,18 @@
 package interfaz;
 
 import datos.Pizzeria;
+
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
+
+import negocio.Categoria;
 import negocio.MateriaPrima;
+
+import javax.swing.JComboBox;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FormMatPrima extends javax.swing.JDialog {
     ArrayList <MateriaPrima> materiasprimas = Pizzeria.devuelveMateriaPrima();
@@ -18,6 +27,7 @@ public class FormMatPrima extends javax.swing.JDialog {
         initComponents();
         limpiar();
         bloquear();
+        iniciocombobox();
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +38,6 @@ public class FormMatPrima extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txcat = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txmatprima = new javax.swing.JTextField();
         btagregar = new javax.swing.JButton();
@@ -75,20 +84,6 @@ public class FormMatPrima extends javax.swing.JDialog {
         );
 
         jLabel2.setText("Categoria:");
-
-        txcat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txcatActionPerformed(evt);
-            }
-        });
-        txcat.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txcatKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txcatKeyTyped(evt);
-            }
-        });
 
         jLabel3.setText("Materia Prima:");
 
@@ -165,88 +160,95 @@ public class FormMatPrima extends javax.swing.JDialog {
                 txbuscarActionPerformed(evt);
             }
         });
+        
+        cbcat = new JComboBox();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chhab)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btagregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btbloquear)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btmodificar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txidmatp, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txcat, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txmatprima, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btsalir, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btbuscar))))
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jLabel2)
+        						.addComponent(jLabel4)
+        						.addComponent(jLabel3))
+        					.addGap(30)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(txidmatp, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(txmatprima, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(cbcat, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(btnuevo)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btagregar)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btbloquear)))
+        			.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+        			.addComponent(btmodificar)
+        			.addGap(24))
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(10)
+        			.addComponent(chhab)
+        			.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+        			.addComponent(txbuscar, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(btbuscar))
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap(369, Short.MAX_VALUE)
+        			.addComponent(btsalir))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btbuscar)
-                    .addComponent(txbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(chhab)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txidmatp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txcat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txmatprima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btmodificar)
-                    .addComponent(btbloquear)
-                    .addComponent(btagregar)
-                    .addComponent(btnuevo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btsalir))
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btbuscar)
+        				.addComponent(txbuscar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(chhab))
+        			.addGap(47)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel4)
+        				.addComponent(txidmatp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel2)
+        				.addComponent(cbcat, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(txmatprima, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jLabel3))
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(btmodificar)
+        				.addComponent(btbloquear)
+        				.addComponent(btagregar)
+        				.addComponent(btnuevo))
+        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addComponent(btsalir))
         );
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     void limpiar (){
        txidmatp.setText("");
-       txcat.setText("");
        txmatprima.setText("");
+    }
+    
+    void iniciocombobox(){
+    	ArrayList<Categoria> categoria=Pizzeria.devuelveCategoria();
+    	for(int i=0;i<categoria.size();i++){
+    		cbcat.addItem(categoria.get(i).getnombre());
+    	}
     }
     
     void bloquear(){
        txidmatp.setEnabled(false);
-       txcat.setEnabled(false);
        txmatprima.setEnabled(false);
        
        btnuevo.setEnabled(true);
@@ -258,7 +260,7 @@ public class FormMatPrima extends javax.swing.JDialog {
     
        void desbloquear(){
        txidmatp.setEnabled(false);
-       txcat.setEnabled(true);
+      // txcat.setEnabled(true);
        txmatprima.setEnabled(true);
         
        
@@ -273,8 +275,7 @@ public class FormMatPrima extends javax.swing.JDialog {
         int id=Integer.parseInt(txidmatp.getText());
         if(txidmatp.getText().equals("")||id<=materiasprimas.size()){
             desbloqueo=false;}
-        else if(txcat.getText().equals("")){
-            desbloqueo=false;}
+       
         else if(txmatprima.getText().equals("")){
             desbloqueo=false;}
         else{
@@ -288,28 +289,18 @@ public class FormMatPrima extends javax.swing.JDialog {
        }
        
        void desbloquearBloqHab(int es){
-         if(es==0){chhab.setSelected(true);}
-         else if(es==1){chhab.setSelected(false);}
+         if(es==0){chhab.setSelected(false);}
+         else if(es==1){chhab.setSelected(true);}
+       }
+       
+       void actualizar(){
+    	   this.materiasprimas=Pizzeria.devuelveMateriaPrima();
        }
     
     private void btagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btagregarActionPerformed
+    	ArrayList <Categoria> categoria = Pizzeria.devuelveCategoria();
+    	
         //0=EstaMarcado 1=NOestaMarcado
-        int es;
-        if(chhab.isSelected()){
-           es=0; 
-        }
-        else{
-            es=1;
-        }
-        String nombre=txmatprima.getText().toUpperCase();
-        int id=Integer.parseInt(txidmatp.getText());
-        String cat=txcat.getText();
-        Pizzeria.agregarmatprima(nombre,cat,es);
-        bloquear();
-    }//GEN-LAST:event_btagregarActionPerformed
-
-    private void btbloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbloquearActionPerformed
-        int id=Integer.parseInt(txidmatp.getText());
         int es;
         if(chhab.isSelected()){
            es=1; 
@@ -317,15 +308,48 @@ public class FormMatPrima extends javax.swing.JDialog {
         else{
             es=0;
         }
-        Pizzeria.bloquarDesbloquearMatprima(id, es);
-        desbloquearBloqHab(es);
-    }//GEN-LAST:event_btbloquearActionPerformed
-
-    private void btmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmodificarActionPerformed
         String nombre=txmatprima.getText().toUpperCase();
         int id=Integer.parseInt(txidmatp.getText());
-        int cat=Integer.parseInt(txcat.getText());
-        Pizzeria.modificarmatprima(id, nombre,cat);        
+        int cat = 0;
+        String cateselec=(String) cbcat.getSelectedItem();
+        //String cat=txcat.getText();
+        for(int i=0;i<categoria.size();i++){
+        	if(cateselec.equals(categoria.get(i).getnombre())){
+        		cat=categoria.get(i).getid();
+        	}
+        }
+        Pizzeria.agregarmatprima(id,nombre,cat,es);
+        bloquear();
+        actualizar();
+    }//GEN-LAST:event_btagregarActionPerformed
+
+    private void btbloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbloquearActionPerformed
+        int id=Integer.parseInt(txidmatp.getText());
+        int es;
+        if(chhab.isSelected()){
+           es=0; 
+        }
+        else{
+            es=1;
+        }
+        Pizzeria.bloquarDesbloquearMatprima(id, es);
+        desbloquearBloqHab(es);
+        actualizar();
+    }//GEN-LAST:event_btbloquearActionPerformed
+
+	private void btmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmodificarActionPerformed
+    	ArrayList <Categoria> categoria = Pizzeria.devuelveCategoria();
+        String nombre=txmatprima.getText().toUpperCase();
+        int id=Integer.parseInt(txidmatp.getText());
+        int cat = 0;
+        for(int i=0;i<categoria.size();i++){
+        	if(cbcat.getSelectedItem().equals(categoria.get(i).getnombre())){
+        		cat=categoria.get(i).getid();
+        	}
+        }
+        
+        Pizzeria.modificarmatprima(id, nombre,cat);      
+        actualizar();
     }//GEN-LAST:event_btmodificarActionPerformed
 
     private void txidmatpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txidmatpActionPerformed
@@ -336,15 +360,6 @@ public class FormMatPrima extends javax.swing.JDialog {
             txidmatp.transferFocus(); 
         }
     }//GEN-LAST:event_txidmatpActionPerformed
-
-    private void txcatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txcatActionPerformed
-        if(txcat.getText().equals("")){
-            txcat.requestFocus();
-        }
-        else{
-            txcat.transferFocus(); 
-        }
-    }//GEN-LAST:event_txcatActionPerformed
 
     private void txmatprimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txmatprimaActionPerformed
         if(txmatprima.getText().equals("")){
@@ -360,21 +375,19 @@ public class FormMatPrima extends javax.swing.JDialog {
     }//GEN-LAST:event_btsalirActionPerformed
 
     private void btnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnuevoActionPerformed
+    	ArrayList<Categoria> categoria = Pizzeria.devuelveCategoria();
         chhab.setSelected(true);
         limpiar();
         desbloquear();
         String setid=Integer.toString(materiasprimas.size()+1);
         txidmatp.setText(setid);
         txidmatp.requestFocus();
-    }//GEN-LAST:event_btnuevoActionPerformed
+       
+   }//GEN-LAST:event_btnuevoActionPerformed
 
     private void txidmatpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txidmatpKeyTyped
         desbloquearGuardar();
     }//GEN-LAST:event_txidmatpKeyTyped
-
-    private void txcatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txcatKeyTyped
-        desbloquearGuardar();
-    }//GEN-LAST:event_txcatKeyTyped
 
     private void txmatprimaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txmatprimaKeyTyped
         desbloquearGuardar();
@@ -387,15 +400,6 @@ public class FormMatPrima extends javax.swing.JDialog {
         }
         //desbloquearGuarMod();
     }//GEN-LAST:event_txidmatpKeyReleased
-
-    private void txcatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txcatKeyReleased
-        if(!txcat.getText().matches("[0-9--]*")){
-            JOptionPane.showMessageDialog(null, "Solo valores numéricos","Advertencia",JOptionPane.ERROR_MESSAGE);
-            txcat.setText("");
-            
-        }
-        desbloquearGuardar();
-    }//GEN-LAST:event_txcatKeyReleased
 
     private void txmatprimaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txmatprimaKeyReleased
         /*char c = evt.getKeyChar();
@@ -414,22 +418,29 @@ public class FormMatPrima extends javax.swing.JDialog {
     }//GEN-LAST:event_txbuscarActionPerformed
 
     private void btbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbuscarActionPerformed
+    	ArrayList <Categoria>categoria=Pizzeria.devuelveCategoria();
+        String nombre=txbuscar.getText().toUpperCase();
+
         boolean existe=false;
         for(int i=0;i<materiasprimas.size();i++){
-           String nombre=txbuscar.getText().toUpperCase();
         if(nombre.equals(materiasprimas.get(i).getnombre())){
             String id=Integer.toString(materiasprimas.get(i).getidmp());
             txidmatp.setText(id);
             txmatprima.setText(materiasprimas.get(i).getnombre());
-            String cat=materiasprimas.get(i).getcategoria();
-            txcat.setText(cat); 
-            if(materiasprimas.get(i).gethabilitado()==0){
+            int cat=Integer.valueOf(materiasprimas.get(i).getcategoria());
+            //txcat.setText(cat); 
+            if(materiasprimas.get(i).gethabilitado()==1){
             chhab.setSelected(true);
             }
-            else if (materiasprimas.get(i).gethabilitado()==1){
+            else if (materiasprimas.get(i).gethabilitado()==0){
             chhab.setSelected(false);         
             }
             
+            for(int j=0;j<categoria.size();j++){
+            	if(cat==categoria.get(j).getid()){
+            		cbcat.setSelectedItem(categoria.get(j).getnombre());
+            	}
+            }
             existe=true;
             btagregar.setEnabled(false);
             desbloquear();
@@ -499,8 +510,7 @@ public class FormMatPrima extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txbuscar;
-    private javax.swing.JTextField txcat;
     private javax.swing.JTextField txidmatp;
     private javax.swing.JTextField txmatprima;
-    // End of variables declaration//GEN-END:variables
+    private JComboBox cbcat;
 }

@@ -3,11 +3,11 @@ package negocio;
 public class MateriaPrima {
         private int idmp;
         private String nombremp;
-	private String categoria;
-	private int habilitado;
+        private String categoria;
+        private int habilitado;
         
 
-public MateriaPrima(int idmp,String nombremp, String categoria,int habilitado){
+public MateriaPrima(int idmp, String categoria,String nombremp,int habilitado){
     this.idmp=idmp;
     this.nombremp=nombremp;
     this.categoria=categoria;

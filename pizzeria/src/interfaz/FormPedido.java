@@ -42,6 +42,8 @@ public class FormPedido extends JFrame implements ActionListener {
 	private JMenuBar mbar;
 	private JMenu opciones;
 	private JMenuItem buscarPedido;
+	private JMenuItem modificarPedido;
+
 	private Pedido pedidoActivo;
 	private JTextField pedido;
 	private JTextField fechaPedido;
@@ -78,6 +80,11 @@ public class FormPedido extends JFrame implements ActionListener {
 		buscarPedido = new JMenuItem("Consultar pedido");
 		buscarPedido.addActionListener(this);
 		opciones.add(buscarPedido);
+
+		modificarPedido = new JMenuItem("Modificar pedido");
+		modificarPedido.addActionListener(this);
+		opciones.add(modificarPedido);
+		System.out.println("HOLA");
 		getContentPane().setLayout(null);
 
 		JLabel lblCliente = new JLabel("Cliente");
@@ -560,6 +567,6 @@ public class FormPedido extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
 	}
+	
 }

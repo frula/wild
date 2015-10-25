@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import negocio.Categoria;
 import negocio.Cliente;
 import negocio.DetallePedido;
 import negocio.MateriaPrima;
@@ -46,6 +47,29 @@ public class Pizzeria {
 			e.printStackTrace();
 		}
 		return clientes;
+
+	}
+	
+	public static ArrayList<Categoria> devuelveCategoria() {
+
+		ArrayList<Categoria> categoria = new ArrayList<Categoria>();
+
+		// Recorro el resultado y creo los clientes
+
+		try {
+			ResultSet result;
+			result = Basededatos.consultasql("SELECT * FROM categoria");
+			result.previous();
+			while (result.next()) {
+
+				categoria.add(new Categoria(result.getInt(1), result.getString(2)));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categoria;
 
 	}
 
@@ -208,8 +232,7 @@ public class Pizzeria {
 			result.previous();
 			while (result.next()) {
 
-				matPrima.add(new MateriaPrima(result.getInt(1), result
-						.getString(2), result.getString(3), result.getInt(4)));
+				matPrima.add(new MateriaPrima(result.getInt(1), result.getString(2), result.getString(3), result.getInt(4)));
 
 			}
 		} catch (SQLException e) {
@@ -219,10 +242,10 @@ public class Pizzeria {
 		return matPrima;
 	}
 
-	public static void agregarmatprima(String nombre, String categoria,
+	public static void agregarmatprima(int id,String nombre, int categoria,
 			int habilitado) {
-		String sql = "INSERT INTO materiaprima (MateriaPrima,Categoria,Habilitado) VALUES("
-				+ nombre + "'" + "," + categoria + "," + habilitado + ")";
+		String sql = "INSERT INTO materiaprima (idMatPrima,Categoria,MateriaPrima,Habilitado) VALUES("+id
+			 + "," + categoria +",'"+ nombre + "'"+"," + habilitado + ")";
 		try {
 			Basededatos.ejecutarsql(sql);
 
@@ -241,9 +264,9 @@ public class Pizzeria {
 				+ " WHERE IdMatPrima=" + id;
 		try {
 			Basededatos.ejecutarsql(sql);
-			if (hab == 0) {
+			if (hab == 1) {
 				JOptionPane.showMessageDialog(null, "Materia prima habilitada");
-			} else if (hab == 1) {
+			} else if (hab == 0) {
 				JOptionPane.showMessageDialog(null,
 						"Materia prima No habilitada");
 			}
@@ -443,4 +466,49 @@ public class Pizzeria {
 					ex);
 		}
 	}
+	
+	public static void AgregarCliente(Cliente cliente){
+        String sql="INSERT INTO cliente (IDCliente,Cliente,DNI,Direccion,Telefono,Activo) VALUES("
+                +cliente.getIdCliente()+","
+        		+"'"+
+                cliente.getNombreCliente()
+                +"'"+
+                ","+
+                cliente.getDni()
+                +","+
+                "'"+
+                cliente.getDireccion()
+                +"'"+
+                ","+
+                cliente.getTelefono()
+                +","+
+                cliente.getActivo()+")";
+        try {
+            Basededatos.ejecutarsql(sql);
+            JOptionPane.showMessageDialog(null,"Cliente guardado con exito");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al guardar");
+            Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void modificarcliente(int dni,String nombre,String dir,int tel){
+            String sql="UPDATE cliente SET Cliente="+"'"+nombre+"'"+",Direccion="+"'"+dir+"'"+",Telefono="+tel
+                + " WHERE DNI="+dni;             
+            try {
+            Basededatos.ejecutarsql(sql);
+            JOptionPane.showMessageDialog(null,"Cliente modificado con exito");
+        } catch (SQLException ex) {
+            Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
+        }          
+    }
+    
+    public static void bloquearcliente(int estado,int dni){
+        String sql="UPDATE cliente SET Activo="+estado+" WHERE DNI= "+dni; 
+        try {
+            Basededatos.ejecutarsql(sql);
+            JOptionPane.showMessageDialog(null,"Cliente modificado con exito");
+        } catch (SQLException ex) {
+            Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
+        }          
+    }
 }
