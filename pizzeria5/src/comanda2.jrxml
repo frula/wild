@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comanda2" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11dd41c5-2c45-48fa-9e4b-50f6faa21971">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cGl6emVyaWEucHJvZHVjdG8gQVMgLDI3MywxNDA7cGl6emVyaWEucHJvZHVjdG8gLDE2NSw3O3Bp&#xA;enplcmlhLmRldGFsbGVwZWRpZG8gLDIwLDIwOw=="/>
+	<parameter name="NumPedido" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.producto.`IDProducto`,
+	pizzeria.producto.`Producto`,
+	pizzeria.producto.`Precio`,
+	pizzeria.producto.`Estado`,
+	pizzeria.producto.`Categoria`,
+	pizzeria.detallepedido.`Cantidad`,
+	pizzeria.detallepedido.`IDPedido`,
+	pizzeria.detallepedido.`IDProducto`,
+	pizzeria.detallepedido.`NumeroPedido`,
+	pizzeria.detallepedido.`Observacion`
+FROM pizzeria.producto
+	 INNER JOIN pizzeria.detallepedido ON 
+	 pizzeria.detallepedido.`IDProducto` = pizzeria.producto.`IDProducto` 
+WHERE 
+	 pizzeria.detallepedido.`IDPedido` = $P{NumPedido} 
+	 AND pizzeria.producto.`Categoria` = 'ELABORADO' ]]>
+	</queryString>
+	<field name="NumeroPedido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<detail>
+		<band height="22">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="0" width="275" height="20" uuid="388ac2a7-310d-4968-8d86-b68dde5ce040"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="276" y="0" width="138" height="20" uuid="9b9b7832-2605-47e2-afc0-49851a33a170"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="414" y="0" width="138" height="20" uuid="dd23258d-36ee-4439-b0b2-e0d984c1aa70"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
