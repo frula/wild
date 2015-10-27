@@ -205,7 +205,7 @@ public class FormPedido2 extends javax.swing.JDialog {
 
 				datostabla.addRow(new Object[] {
 
-				productoSeleccionado.getIdProducto(),
+				productoSeleccionado.getIDProducto(),
 						productoSeleccionado.getNombre(), 1,
 						productoSeleccionado.getPrecio(), null, null });
                                 
@@ -701,7 +701,7 @@ public class FormPedido2 extends javax.swing.JDialog {
                             Double tot=pedidos.get(i).getTotalPedido();
                             for(int k=0;k<productos.size();k++){
                              
-                                if(detalle.get(h).getidproducto()==productos.get(k).getIdProducto()){
+                                if(detalle.get(h).getidproducto()==productos.get(k).getIDProducto()){
                                 	
                                 	pro=productos.get(k).getNombre();
                                 }
@@ -735,13 +735,13 @@ public class FormPedido2 extends javax.swing.JDialog {
         else{pr=0;}
         String id=pedido.getText();
         Double tot=Double.valueOf(total.getText());        
-        Pizzeria.modificarpedido(id,tot, pa, pr);
+       // Pizzeria.modificarpedido(id,tot, pa, pr);
         for(int i=0;i<detalle.size();i++){
             if(id.equals(detalle.get(i).getIdPedido())){
                 for(int k=0;k<productos.size();k++){
                     for (int j=0;j<tabdet.getRowCount();j++){ 
                     if(productos.get(k).getNombre()==String.valueOf(tabdet.getValueAt(j, 1))){
-                        idp=productos.get(k).getIdProducto();
+                        idp=productos.get(k).getIDProducto();
                         int cant=Integer.valueOf(String.valueOf(tabdet.getValueAt(j, 2)));
                         String ob = String.valueOf(tabdet.getValueAt(j, 4));
                 

@@ -43,6 +43,8 @@ public class FormPedido extends JFrame implements ActionListener {
 	private JMenu opciones;
 	private JMenuItem buscarPedido;
 	private JMenuItem modificarPedido;
+	private JMenuItem Ingresarbusqueda;
+	
 
 	private Pedido pedidoActivo;
 	private JTextField pedido;
@@ -62,13 +64,19 @@ public class FormPedido extends JFrame implements ActionListener {
 	Integer cantidad;
 	Double precioUnitario;
 	Double totalLinea;
-
+	ArrayList<Pedido> pedidos = Pizzeria.devuelvepedido();
+	int lenght = pedidos.size();
+	private JTextField txbuscar;
+	
 	public FormPedido() {
 		setResizable(false);
-		getContentPane().setBackground(new Color(51, 51, 102));
+		getContentPane().setBackground(new Color(112, 128, 144));
 		setTitle("Pedidos");
 		setSize(new Dimension(910, 561));
 
+		
+    
+		
 		// Creo el menu contenedor
 		mbar = new JMenuBar();
 		mbar.setBackground(new Color(102, 102, 153));
@@ -84,9 +92,13 @@ public class FormPedido extends JFrame implements ActionListener {
 		modificarPedido = new JMenuItem("Modificar pedido");
 		modificarPedido.addActionListener(this);
 		opciones.add(modificarPedido);
-		System.out.println("HOLA");
 		getContentPane().setLayout(null);
 
+		Ingresarbusqueda = new JMenuItem("Ingresar Busqueda");
+		Ingresarbusqueda.addActionListener(this);
+		opciones.add(Ingresarbusqueda);
+		getContentPane().setLayout(null);
+		
 		JLabel lblCliente = new JLabel("Cliente");
 		lblCliente.setFont(new Font("SansSerif", Font.BOLD, 12));
 		lblCliente.setForeground(new Color(255, 255, 255));
@@ -125,7 +137,7 @@ public class FormPedido extends JFrame implements ActionListener {
 		lblProducto.setBounds(26, 144, 55, 16);
 		getContentPane().add(lblProducto);
 
-		JButton btnAgregarproducto = new JButton("AgregarProducto");
+		final JButton btnAgregarproducto = new JButton("AgregarProducto");
 		btnAgregarproducto.setBounds(605, 138, 131, 28);
 		getContentPane().add(btnAgregarproducto);
 
@@ -197,6 +209,8 @@ public class FormPedido extends JFrame implements ActionListener {
 		lblPrecio.setForeground(new Color(255, 255, 255));
 		lblPrecio.setBounds(452, 144, 38, 16);
 		getContentPane().add(lblPrecio);
+		
+		
 
 		// Defino la tabla de detalle y sus campos
 		JScrollPane scrollPane = new JScrollPane();
@@ -239,6 +253,7 @@ public class FormPedido extends JFrame implements ActionListener {
 
 			}
 		});
+		
 
 		// Agregar producto al pedido
 		btnAgregarproducto.addActionListener(new ActionListener() {
@@ -249,7 +264,7 @@ public class FormPedido extends JFrame implements ActionListener {
 				for (int j = 0; j < tabdet.getRowCount(); j++) {
 
 					if (tabdet.getValueAt(j, 0).equals(
-							productoSeleccionado.getIdProducto())) {
+							productoSeleccionado.getIDProducto())) {
 
 						repetido = 1;
 						fila = j;
@@ -260,7 +275,7 @@ public class FormPedido extends JFrame implements ActionListener {
 				if (repetido == 0) {
 					datostabla.addRow(new Object[] {
 
-					productoSeleccionado.getIdProducto(),
+					productoSeleccionado.getIDProducto(),
 							productoSeleccionado.getNombre(), 1,
 							productoSeleccionado.getPrecio(), null, null });
 
@@ -324,18 +339,19 @@ public class FormPedido extends JFrame implements ActionListener {
 		total.setBounds(769, 456, 104, 28);
 		getContentPane().add(total);
 
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(26, 462, 90, 28);
+		final JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setBounds(176, 462, 90, 28);
 		getContentPane().add(btnConfirmar);
 
 		JButton btnNuevoPedido = new JButton("Nuevo Pedido");
 		btnNuevoPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//pedido.setText(String.valueOf(lenght));
 				cliente.setEnabled(true);
 				cliente.setText("");
 				producto.setEnabled(true);
 				producto.setText("");
-				pedido.setText("");
+				//pedido.setText("");
 				dni.setText("");
 				precio.setText("");
 				direccion.setText("");
@@ -345,11 +361,121 @@ public class FormPedido extends JFrame implements ActionListener {
 				for (int i = 0; i < tabdet.getRowCount(); i++) {
 					datostabla.removeRow(i);
 				}
+				btnConfirmar.setEnabled(true);
+				
 			}
 		});
-		btnNuevoPedido.setBounds(733, 18, 140, 28);
+		btnNuevoPedido.setBounds(26, 462, 140, 28);
 		getContentPane().add(btnNuevoPedido);
+		
+		txbuscar = new JTextField();
+		txbuscar.setText("Ingrese Numero pedido");
+		txbuscar.setBounds(578, 18, 186, 24);
+		getContentPane().add(txbuscar);
+		txbuscar.setColumns(10);
+		
+		JButton btbuscar = new JButton("Buscar");
+		btbuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Pedido> pedidos=Pizzeria.devuelvepedido();
+				ArrayList<Cliente> clientes=Pizzeria.devuelveClientes();
+				ArrayList<DetallePedido>detalle=Pizzeria.devuelvedetallepedido();
+				ArrayList<Producto>productos=Pizzeria.devuelveProductos();
+				
+				
+				for(int i=0;i<pedidos.size();i++){
+				if(txbuscar.getText().equals(pedidos.get(i).getIdPedido())){
+					pedido.setText(pedidos.get(i).getNumeroPedido());
+					fechaPedido.setText(pedidos.get(i).getFechaPedido());
+					total.setText(String.valueOf(pedidos.get(i).getTotalPedido()));
+					for(int j=0;j<clientes.size();j++){
+						if(pedidos.get(i).getIdcliente()==clientes.get(j).getIdCliente()){
+							telefono.setText(clientes.get(j).getTelefono());
+							cliente.setText(clientes.get(j).getNombreCliente());
+							dni.setText(clientes.get(j).getDni());
+							direccion.setText(clientes.get(j).getDireccion());
+						}
+					}
+					
+					
+					for(int h=0;h<detalle.size();h++){
+                        String pro = null;
+                        String idped= String.valueOf(pedidos.get(i).getIdPedido());
+                        double precio = 0;
+                        if(idped.equals(detalle.get(h).getIdPedido())){
+                            Double tot=pedidos.get(i).getTotalPedido();
+                            for(int k=0;k<productos.size();k++){
+                                if(detalle.get(h).getidproducto()==productos.get(k).getIDProducto()){
+                                    pro=productos.get(k).getNombre();
+                                    precio=productos.get(k).getPrecio();
+                                }
+                            }
+                            datostabla.addRow(new Object[] {
 
+				detalle.get(h).getidproducto(),
+						pro, detalle.get(h).getCantidad(),
+						precio, tot, detalle.get(h).getObservacion() });
+                        }
+					}
+					
+				}
+				}
+				btnConfirmar.setEnabled(false);
+			}
+			
+		});
+		btbuscar.setBounds(784, 21, 89, 23);
+		getContentPane().add(btbuscar);
+
+		btbuscar.setEnabled(true);
+		
+		final TextAutoCompleter busqueda = new TextAutoCompleter(txbuscar);
+		for (int i = 0; i < Pizzeria.devuelvepedido().size(); i++) {
+
+			busqueda.addItem(pedidos.get(i).getIdPedido());
+		}
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<DetallePedido>detalle=Pizzeria.devuelvedetallepedido();
+				
+			
+		        int idp = 0;
+		        String id=txbuscar.getText();
+		        Double tot=Double.valueOf(total.getText());        
+		        Pizzeria.modificarpedido(id,tot);
+		        for(int i=0;i<detalle.size();i++){
+		            if(id.equals(detalle.get(i).getIdPedido())){
+		                //for(int k=0;k<productos.size();k++){
+		            	Pizzeria.eliminardetalle(id);
+		                    for (int j=0;j<tabdet.getRowCount();j++){ 
+		                  //  if(productos.get(k).getNombre()==String.valueOf(tabdet.getValueAt(j, 1))){
+		                        idp=Integer.valueOf(String.valueOf(tabdet.getValueAt(j, 0)));
+		                        int cant=Integer.valueOf(String.valueOf(tabdet.getValueAt(j, 2)));
+		                        String ob = String.valueOf(tabdet.getValueAt(j, 5));
+		                        
+		                        DetallePedido deta = new DetallePedido(txbuscar.getText(),pedido.getText(),idp,cant,ob);
+		                        Pizzeria.agregarDetallePedido(deta);
+		                        
+		                        }
+		                    }
+		                }
+		        
+		        pedidos.equals(Pizzeria.devuelvepedido());
+			}
+
+			private void borrartabla() {
+			        int total=datostabla.getRowCount();
+			        for (int i = total-1; i >= 0; i--) {
+			             datostabla.removeRow(i); 
+			            }
+			    
+				
+			}
+		});
+		btnModificar.setBounds(276, 460, 89, 30);
+		getContentPane().add(btnModificar);
 		// Completo los campos con el cliente seleccionado
 		cliente.getDocument().addDocumentListener(
 				new javax.swing.event.DocumentListener() {
@@ -560,13 +686,20 @@ public class FormPedido extends JFrame implements ActionListener {
 
 			}
 			// aca termina el ingreso
+			
 
 		});
 		// aca termina la clase
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		fechaPedido.setText("");
+		fechaPedido.setEnabled(true);
+		txbuscar.setText("Ingrese numero de pedido");
+		txbuscar.setEnabled(true);
 	}
+	
 	
 }

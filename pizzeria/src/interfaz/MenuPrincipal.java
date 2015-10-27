@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import negocio.Producto;
 import datos.BackUP;
 
 public class MenuPrincipal extends JFrame implements ActionListener {
@@ -68,8 +69,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		btnCliente = new JButton("Clientes");
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormCliente clientes = new FormCliente(
-						new javax.swing.JFrame(), true);
+				ABMcliente clientes = new ABMcliente();
 				clientes.setVisible(true);
 			}
 		});
@@ -103,8 +103,8 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Productos pro = new Productos();
-						pro.setVisible(true);
+				//Producto pro = new Producto();
+					//	pro.setVisible(true);
 				
 			}
 		});
@@ -114,9 +114,9 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		JButton btnCombos = new JButton("Combos");
 		btnCombos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Combos combo = new Combos();
+				//Combos combo = new Combos();
 						
-			    combo.setVisible(true);
+			    //combo.setVisible(true);
 			}
 		});
 		btnCombos.setBounds(308, 88, 89, 23);

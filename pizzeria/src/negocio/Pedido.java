@@ -16,6 +16,7 @@ public class Pedido {
     private int cliente;
     private double subTotal;
 	private boolean Adomicilio;
+	private String estado;
 
 	public Pedido(String numPed, Cliente clientePedido, String fechaPedido,
 			double totalPedido) {
@@ -44,6 +45,22 @@ public class Pedido {
 	                
 	                if(Adomicilio==0){this.Adomicilio = false;}
 	                else{this.Adomicilio=true;}
+	                
+		}
+	  
+	  public Pedido(String idPedido, String numPed,int cliente,
+				String fechaPedido, double totalPedido,int Adomicilio,String estado) {
+
+			this.idPedido = idPedido;
+			this.numeroPedido = numPed;
+	                this.cliente=cliente;
+			this.fechaPedido = fechaPedido;
+			this.subTotal = subTotal;
+			this.totalPedido = totalPedido;        
+	                if(Adomicilio==0){this.Adomicilio = false;}
+	                else{this.Adomicilio=true;}
+	                
+	                this.estado=estado;
 	                
 		}
 	
@@ -146,5 +163,12 @@ public class Pedido {
 }
     public boolean getAdomicilio(){
         return this.Adomicilio;
+    }
+    
+    public String getestado(){
+        return this.estado;
+    }
+    public void setestado(String estado){
+        this.estado=estado;
     }
 }

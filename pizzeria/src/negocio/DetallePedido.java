@@ -19,6 +19,16 @@ public class DetallePedido {
 		this.cantidad = cantidad;
 		this.observacion = observacion;
 	}
+	
+	public DetallePedido(String idPedido, String numPed,
+			int productoIngresado, int cantidad, String observacion) {
+
+		this.idPedido = idPedido;
+		this.numeroPedido = numPed;
+		this.idproducto = productoIngresado;
+		this.cantidad = cantidad;
+		this.observacion = observacion;
+	}
 
 	public DetallePedido(String idPedido, int productoIngresado,
 			int cantidad, String observacion) {

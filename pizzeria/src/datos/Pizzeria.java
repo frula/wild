@@ -17,10 +17,14 @@ import negocio.DetallePedido;
 import negocio.MateriaPrima;
 import negocio.Pedido;
 import negocio.Producto;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 //import net.sf.jasperreports.engine.JRException;
 //import net.sf.jasperreports.engine.JasperFillManager;
 //import net.sf.jasperreports.engine.JasperPrint;
 //import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Pizzeria {
 
@@ -85,7 +89,7 @@ public class Pizzeria {
 			result = Basededatos.consultasql("SELECT * FROM producto");
 			result.previous();
 			while (result.next()) {
-
+ 
 				productos.add(new Producto(result.getInt(1), result
 						.getString(2), result.getDouble(3), result.getInt(4),
 						result.getInt(5)));
@@ -194,7 +198,7 @@ public class Pizzeria {
 
 	}
 
-/*	public static void abrirReporte(String archivo, String parametroAPasarle,
+	public static void abrirReporte(String archivo, String parametroAPasarle,
 			String nombreParametro)
 
 	{
@@ -217,7 +221,7 @@ public class Pizzeria {
 			e.printStackTrace();
 		}
 
-	}*/
+	}
 
 	// Devuelve materias primas
 	public static ArrayList<MateriaPrima> devuelveMateriaPrima() {
@@ -240,6 +244,29 @@ public class Pizzeria {
 			e.printStackTrace();
 		}
 		return matPrima;
+	}
+	
+	public static ArrayList<Pedido> devuelvepedidoEstado(){
+
+		ArrayList<Pedido> pedidos=new ArrayList<Pedido>();
+				
+		//Recorro el resultado y creo las materias primas
+		
+		try {
+			ResultSet result;
+			result = Basededatos.consultasql("SELECT * FROM pedido" );
+			result.previous();
+			while (result.next()) {
+				
+				pedidos.add(new Pedido(result.getString(1),result.getString(2),result.getInt(3),result.getString(4),
+                                        result.getDouble(5),result.getInt(8),result.getString(9)));
+				
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pedidos;
 	}
 
 	public static void agregarmatprima(int id,String nombre, int categoria,
@@ -340,6 +367,16 @@ public class Pizzeria {
 		}
 		return detalle;
 	}
+	
+	public static void modificarpedido(int id,int dc,String estado){
+        String sql="UPDATE pedido SET ADomicilio="+dc+", Estado="+"'"+estado+"'"+ " WHERE IDPedido="+id;  
+        try {
+            Basededatos.ejecutarsql(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    
+    }
 
 	public static void agregarPedido(String id, int numpedido, int cliente,
 			Date fecha, Double subtotal, Double total, int pagado,
@@ -377,14 +414,13 @@ public class Pizzeria {
 	}
 
 	public static void agregarDetallePedido(DetallePedido detalle) {
-		String sql = "INSERT INTO detallepedido (IDPedido,IDProducto,PrecioUnitario,Cantidad,Observacion) VALUES("
-				+ "'"
+		String sql = "INSERT INTO detallepedido (IDPedido,NumeroPedido,IDProducto,Cantidad,Observacion) VALUES("
+				 
 				+ detalle.getIdPedido()
-				+ "'"
+				+ ","
+				+ detalle.getNumeroPedido()
 				+ ","
 				+ detalle.getidproducto()
-				+ ","
-				+ detalle.getprecioUnitario()
 				+ ","
 				+ detalle.getCantidad()
 				+ ","
@@ -412,11 +448,10 @@ public class Pizzeria {
 
 	}
 
-	public static void modificarpedido(String id, Double total, int pagado,
-			int preparado) {
-		String sql = "UPDATE pedido SET TotalPedido=" + total + "," + "Pagado="
-				+ pagado + ",Preparado=" + preparado + " WHERE IDPedido=" + "'"
-				+ id + "'";
+	
+	
+	public static void modificarpedido(String id, Double total) {
+		String sql = "UPDATE pedido SET TotalPedido=" + total  + " WHERE IDPedido=" +id ;
 		try {
 			Basededatos.ejecutarsql(sql);
 			JOptionPane.showMessageDialog(null,
@@ -511,4 +546,5 @@ public class Pizzeria {
             Logger.getLogger(Pizzeria.class.getName()).log(Level.SEVERE, null, ex);
         }          
     }
+
 }
