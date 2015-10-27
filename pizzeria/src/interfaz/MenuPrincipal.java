@@ -91,7 +91,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		btnPedidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Pedidos formularioPedidos = new Pedidos(
+				pedidos2 formularioPedidos = new pedidos2(
 						new javax.swing.JFrame(), true);
 				formularioPedidos.setVisible(true);
 			}
@@ -121,6 +121,16 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		});
 		btnCombos.setBounds(308, 88, 89, 23);
 		getContentPane().add(btnCombos);
+		
+		JButton btnProveedor = new JButton("Proveedor");
+		btnProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				proveedores proveedor = new proveedores();
+				proveedor.setVisible(true);
+			}
+		});
+		btnProveedor.setBounds(22, 135, 89, 28);
+		getContentPane().add(btnProveedor);
 
 		// Creo el menu contenedor
 		mb = new JMenuBar();
