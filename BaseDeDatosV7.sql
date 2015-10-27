@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         5.6.14 - MySQL Community Server (GPL)
 -- SO del servidor:              Win32
--- HeidiSQL Versión:             8.1.0.4545
+-- HeidiSQL Versión:             8.1.0.4545pizzeria2pizzeria
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
