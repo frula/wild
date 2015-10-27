@@ -254,6 +254,7 @@ public class FormPedido extends JFrame implements ActionListener {
 			}
 		});
 		
+		
 
 		// Agregar producto al pedido
 		btnAgregarproducto.addActionListener(new ActionListener() {
@@ -310,6 +311,12 @@ public class FormPedido extends JFrame implements ActionListener {
 
 		// Cargo las busquedas
 
+		final TextAutoCompleter productos = new TextAutoCompleter(producto);
+		for (int i = 0; i < Pizzeria.devuelveProductos().size(); i++) {
+
+			productos.addItem(Pizzeria.devuelveProductos().get(i));
+		}
+		
 		final TextAutoCompleter clientes = new TextAutoCompleter(cliente);
 		for (int i = 0; i < Pizzeria.devuelveClientes().size(); i++) {
 
@@ -317,11 +324,7 @@ public class FormPedido extends JFrame implements ActionListener {
 
 		}
 
-		final TextAutoCompleter productos = new TextAutoCompleter(producto);
-		for (int i = 0; i < Pizzeria.devuelveProductos().size(); i++) {
-
-			productos.addItem(Pizzeria.devuelveProductos().get(i));
-		}
+		
 
 		// Defino la fecha del dia
 		fechaPedido.setText(Basededatos.dateToMySQLDate2(new Date()));
@@ -358,9 +361,15 @@ public class FormPedido extends JFrame implements ActionListener {
 				delivery.setEnabled(true);
 				delivery.setSelected(false);
 				tabdet.setEnabled(true);
-				for (int i = 0; i < tabdet.getRowCount(); i++) {
-					datostabla.removeRow(i);
-				}
+			    txbuscar.setEnabled(true);
+			    txbuscar.setText("");
+				int total=datostabla.getRowCount();
+			        for (int i = total-1; i >= 0; i--) {
+			             datostabla.removeRow(i); 
+			            }
+			    
+				
+			
 				btnConfirmar.setEnabled(true);
 				
 			}
@@ -420,6 +429,7 @@ public class FormPedido extends JFrame implements ActionListener {
 					
 				}
 				}
+				txbuscar.setEnabled(false);
 				btnConfirmar.setEnabled(false);
 			}
 			
@@ -465,14 +475,7 @@ public class FormPedido extends JFrame implements ActionListener {
 		        pedidos.equals(Pizzeria.devuelvepedido());
 			}
 
-			private void borrartabla() {
-			        int total=datostabla.getRowCount();
-			        for (int i = total-1; i >= 0; i--) {
-			             datostabla.removeRow(i); 
-			            }
-			    
-				
-			}
+		
 		});
 		btnModificar.setBounds(276, 460, 89, 30);
 		getContentPane().add(btnModificar);

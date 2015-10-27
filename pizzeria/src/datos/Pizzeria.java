@@ -90,9 +90,7 @@ public class Pizzeria {
 			result.previous();
 			while (result.next()) {
  
-				productos.add(new Producto(result.getInt(1), result
-						.getString(2), result.getDouble(3), result.getInt(4),
-						result.getInt(5)));
+				productos.add(new Producto(result.getInt(1), result.getString(2), result.getDouble(3), result.getInt(4),result.getInt(5)));
 
 			}
 		} catch (SQLException e) {
