@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticket" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c94118bf-c694-4ff0-9dd8-1cf79cadccf8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cGl6emVyaWEuZGV0YWxsZXBlZGlkbyBBUyAsMjgxLDM2O3BpenplcmlhLnBlZGlkbyBBUyAsMjAs&#xA;MjA7"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="NumPedido" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.cliente.`Cliente`,
+	pizzeria.cliente.`IDCliente`,
+	pizzeria.producto.`Producto`,
+	pizzeria.producto.`IDProducto`,
+	pizzeria.detallepedido.`Cantidad`,
+	pizzeria.detallepedido.`IDPedido`,
+	pizzeria.detallepedido.`IDProducto`,
+	pizzeria.detallepedido.`NumeroPedido`,
+	pizzeria.detallepedido.`Observacion`,
+	pizzeria.pedido.`TotalPedido`,
+	pizzeria.pedido.`Preparado`,
+	pizzeria.pedido.`FechaPedido`,
+	pizzeria.pedido.`Adomicilio`,
+	pizzeria.pedido.`Pagado`,
+	pizzeria.pedido.`NumeroPedido`,
+	pizzeria.pedido.`IDPedido`,
+	pizzeria.pedido.`Cliente`
+FROM pizzeria.detallepedido
+	 INNER JOIN pizzeria.pedido ON 
+	 pizzeria.pedido.`IDPedido` = pizzeria.detallepedido.`IDPedido` ,
+	pizzeria.producto,
+	pizzeria.cliente
+WHERE 
+	 pizzeria.pedido.`NumeroPedido` =  $P{NumPedido}]]>
+	</queryString>
+	<field name="NumeroPedido" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FechaPedido" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IDProducto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalPedido" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="NumeroPedido" order="Descending"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{NumeroPedido}]]></groupExpression>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="40">
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="-8" width="99" height="20" forecolor="#0C0D0D" backcolor="#FFFFFF" uuid="7c9d6ffc-a33a-42b0-8246-9ce93d7cfef7"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FechaPedido]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="420" y="-8" width="145" height="20" uuid="caf1c507-fe51-473e-9d89-2fcf86594f57"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaPedido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-14" y="-11" width="100" height="31" uuid="796cbc19-bdd4-4ebc-bb62-11d5d8ba3e0a"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ticket"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="90" y="-12" width="190" height="32" forecolor="#000000" backcolor="#FFFFFF" uuid="a5a7c1a8-8540-41c8-9573-793962288cfc"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NumeroPedido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="97d9dee4-4ce5-4a08-aca8-4421a0c4d716"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="-11" y="1" width="220" height="20" forecolor="#121111" backcolor="#E6E6E6" uuid="2e5ac37a-36c1-41f1-9851-8c7311fd137a"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="209" y="1" width="279" height="20" forecolor="#0F0F0F" backcolor="#E6E6E6" uuid="a27e7538-3cc9-4dd5-96a4-fc6f74b2c90b"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="484" y="1" width="79" height="20" forecolor="#101112" backcolor="#E6E6E6" uuid="ec6f710a-dbc9-4fbf-825e-4a64e397a1fa"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="-5" y="19" width="555" height="1" uuid="cbc749fa-df1c-4f81-bf38-b43b0d68fa5c"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="-11" y="-5" width="220" height="20" uuid="c32f40a1-d8e5-4035-8701-8c166308441e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="209" y="-5" width="279" height="20" uuid="c9e4b8c1-23a4-43cb-92cb-6f08f16a7c43"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="483" y="-6" width="79" height="20" uuid="bb963f9e-a203-491f-a299-5bae2cd3b025"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33">
+			<staticText>
+				<reportElement mode="Opaque" x="397" y="4" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0a95beb0-45a9-4061-be78-067ae3f9d01d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TotalPedido]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="482" y="4" width="79" height="20" uuid="c73ae60b-7943-4d3d-88a4-1fcf6e43fe1f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalPedido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20"/>
+	</summary>
+</jasperReport>
