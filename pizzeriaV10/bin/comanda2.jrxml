@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comanda2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="e4c58e8d-1e35-495c-b14a-bff3032b2d0b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cGl6emVyaWEuZGV0YWxsZWNvbWJvICwyMCwyMDtwaXp6ZXJpYS5kZXRhbGxlcGVkaWRvICwzMTQs&#xA;MjE7cGl6emVyaWEucHJvZHVjdG8gQVMgLDEzOSwyMzY7"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="NumPedido" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.producto.`Categoria`,
+	pizzeria.detallecombo.`Linea`,
+	pizzeria.detallecombo.`Cantidad`,
+	pizzeria.detallecombo.`Producto`,
+	pizzeria.detallecombo.`IDCombo`,
+	pizzeria.detallecombo.`Descripcion`,
+	pizzeria.detallepedido.`Cantidad`,
+	pizzeria.detallepedido.`IDPedido`,
+	pizzeria.detallepedido.`IDProducto`,
+	pizzeria.detallepedido.`NumeroPedido`,
+	pizzeria.detallepedido.`Observacion`
+FROM pizzeria.producto
+	 INNER JOIN pizzeria.detallecombo ON 
+	 pizzeria.detallecombo.`Descripcion` = pizzeria.producto.`Producto` 
+	 INNER JOIN pizzeria.detallepedido ON 
+	 pizzeria.detallepedido.`IDProducto` = pizzeria.detallecombo.`IDCombo` 
+WHERE 
+	 pizzeria.detallepedido.`IDPedido` = $P{NumPedido} 
+	 AND pizzeria.producto.`Categoria` <> 'LISTO']]>
+	</queryString>
+	<field name="Descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="384" y="0" width="196" height="21" uuid="04a19d60-5aba-478f-bff7-a0281ae30e23"/>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="590" y="0" width="71" height="21" uuid="a935a968-4d92-4113-b1f5-bf7486f878f0"/>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

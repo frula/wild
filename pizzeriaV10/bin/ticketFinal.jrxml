@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketInterno" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c1361f0-5d05-4185-bb67-fcc1044c987f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="NumPedido" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.pedido.`TotalPedido`,
+	pizzeria.pedido.`IDPedido`
+FROM pizzeria.pedido
+WHERE 
+	 pizzeria.pedido.`IDPedido` = $P{NumPedido}]]>
+	</queryString>
+	<field name="IDPedido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalPedido" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{IDPedido}]]></groupExpression>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="10"/>
+	</background>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="10" width="802" height="21" uuid="2d62a6ee-4b6c-4853-a7bb-656e9c679838"/>
+				<subreportParameter name="NumPedido">
+					<subreportParameterExpression><![CDATA[$P{NumPedido}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["src/ticketInterno.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="11" width="801" height="21" uuid="b3b17fc2-db59-4c30-9ca7-e6fecf21c315"/>
+				<subreportParameter name="NumPedido">
+					<subreportParameterExpression><![CDATA[$P{NumPedido}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["src/ticket.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="316" y="14" width="90" height="20" uuid="5c460b7d-8e51-4465-b376-672906b64430"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalPedido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="266" y="13" width="42" height="20" forecolor="#070808" backcolor="#E6E6E6" uuid="3a5d7727-ccee-419a-b93d-223cb3faa20e"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="39" width="424" height="1" forecolor="#666666" uuid="e2b6ade6-9d88-47ea-96cb-af3522ba7102"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="-20" y="7" width="424" height="1" forecolor="#666666" uuid="532170c4-abc8-49e5-809b-c9e95f0b7ff0"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

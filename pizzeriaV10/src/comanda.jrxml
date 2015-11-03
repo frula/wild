@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comanda" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="feebae90-f128-44cb-9cab-4ae1b15fad48">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cGl6emVyaWEuZGV0YWxsZXBlZGlkbyAsMjk3LDI0O3BpenplcmlhLnByb2R1Y3RvICwyMCwyMDtw&#xA;aXp6ZXJpYS5kZXRhbGxlY29tYm8gLDE3NiwyMTc7"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="NumPedido" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pizzeria.detallepedido.`Observacion`,
+	pizzeria.detallepedido.`Cantidad`,
+	pizzeria.detallepedido.`IDPedido`,
+	pizzeria.detallepedido.`IDProducto`,
+	pizzeria.detallepedido.`NumeroPedido`,
+	pizzeria.detallepedido.`Observacion`,
+	pizzeria.producto.`IDProducto`,
+	pizzeria.producto.`Producto`,
+	pizzeria.producto.`Precio`,
+	pizzeria.producto.`Estado`,
+	pizzeria.producto.`Categoria`
+FROM pizzeria.producto
+	 INNER JOIN pizzeria.detallepedido ON 
+	 pizzeria.detallepedido.`IDProducto` = pizzeria.producto.`IDProducto` 
+WHERE 
+	 pizzeria.detallepedido.`IDPedido` = $P{NumPedido} 
+	 AND pizzeria.producto.`Categoria` <> 'Combo' 
+	 AND pizzeria.producto.`Categoria` <> 'Listo']]>
+	</queryString>
+	<field name="Producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Observacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="386" y="4" width="194" height="22" uuid="d72a8602-4e5a-424d-9770-ae0ff0f6fdd3"/>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="590" y="5" width="101" height="21" uuid="8fabf2e9-8696-466a-a526-1e205a5eeebb"/>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="3" width="111" height="23" uuid="4ff690b9-02f6-4378-bff1-408f47a77c84"/>
+				<textFieldExpression><![CDATA[$F{Observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
